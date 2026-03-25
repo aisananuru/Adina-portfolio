@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adina Shady — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0D0D0D;
+  --white: #FAF9F7;
+  --lime: #C8F04A;
+  --mid: #8A8A7A;
+  --warm: #F2EDE4;
+  --card: #141414;
+  --border: rgba(255,255,255,0.08);
+  --accent2: #FF6B3D;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── CURSOR ── */
+#cur { position:fixed; width:8px; height:8px; background:var(--lime); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:width .15s,height .15s; mix-blend-mode:difference; }
+#cur-ring { position:fixed; width:32px; height:32px; border:1px solid var(--lime); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); opacity:.4; transition:width .25s,height .25s; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top:0; left:0; right:0;
+  display:flex; justify-content:space-between; align-items:center;
+  padding: 1.2rem 3rem;
+  z-index: 200;
+  background: linear-gradient(to bottom, rgba(13,13,13,0.9) 0%, transparent 100%);
+  backdrop-filter: blur(4px);
+}
+.nav-id {
+  font-family: 'DM Mono', monospace;
+  font-size: .65rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--lime);
+  opacity: .8;
+}
+.nav-links { display:flex; gap:2.5rem; }
+.nav-links a {
+  font-family: 'DM Mono', monospace;
+  font-size: .6rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--white);
+  opacity: .4;
+  transition: opacity .2s, color .2s;
+  cursor: none;
+}
+.nav-links a:hover { opacity: 1; color: var(--lime); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  padding: 0 3rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 7rem;
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: .6rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--lime);
+  margin-bottom: 1.8rem;
+  opacity: 0;
+  animation: up .7s .2s forwards;
+  display: flex; align-items: center; gap: 1rem;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: block; width: 30px; height: 1px;
+  background: var(--lime);
+}
+.hero-h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3.8rem, 9vw, 9rem);
+  font-weight: 900;
+  line-height: .93;
+  letter-spacing: -.03em;
+  opacity: 0;
+  animation: up .9s .4s forwards;
+}
+.hero-h1 .outline {
+  -webkit-text-stroke: 1.5px var(--white);
+  color: transparent;
+}
+.hero-h1 .lime { color: var(--lime); }
+
+.hero-row2 {
+  display: flex;
+  gap: 4rem;
+  align-items: flex-end;
+  margin-top: 2.5rem;
+  opacity: 0;
+  animation: up .8s .65s forwards;
+}
+.hero-desc {
+  max-width: 440px;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: rgba(250,249,247,.55);
+  font-weight: 300;
+}
+.hero-desc strong { color: var(--white); font-weight: 400; }
+.hero-actions { display:flex; gap:1rem; align-items:center; white-space:nowrap; }
+
+.btn-lime {
+  font-family: 'DM Mono', monospace;
+  font-size: .62rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  background: var(--lime);
+  color: var(--black);
+  padding: .85rem 1.8rem;
+  text-decoration: none;
+  border: none;
+  cursor: none;
+  transition: background .25s, transform .2s;
+  font-weight: 500;
+}
+.btn-lime:hover { background: #d4f55c; transform: translateY(-2px); }
+.btn-outline {
+  font-family: 'DM Mono', monospace;
+  font-size: .62rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  background: transparent;
+  color: var(--white);
+  padding: .85rem 1.8rem;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,.2);
+  cursor: none;
+  transition: border-color .25s, color .25s;
+}
+.btn-outline:hover { border-color: var(--lime); color: var(--lime); }
+
+/* Big background text */
+.hero-bg-text {
+  position: absolute;
+  bottom: -2rem; right: -1rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 22vw;
+  font-weight: 900;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255,255,255,.04);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+  letter-spacing: -.05em;
+}
+
+/* Hero bottom strip */
+.hero-strip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--border);
+  opacity: 0;
+  animation: up .7s 1s forwards;
+  z-index: 2;
+  position: relative;
+}
+.hero-strip-stat { text-align: center; }
+.stat-n {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--lime);
+  line-height: 1;
+}
+.stat-l {
+  font-family: 'DM Mono', monospace;
+  font-size: .52rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-top: .3rem;
+}
+.strip-divider { width:1px; height:40px; background: var(--border); }
+
+/* ── MARQUEE ── */
+.marquee {
+  overflow: hidden;
+  background: var(--lime);
+  padding: .8rem 0;
+  white-space: nowrap;
+}
+.marquee-track {
+  display: inline-block;
+  animation: scroll-l 18s linear infinite;
+  font-family: 'DM Mono', monospace;
+  font-size: .6rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--black);
+}
+.m-dot { margin: 0 1.5rem; opacity: .4; }
+@keyframes scroll-l { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ── IDENTITY ── */
+.identity {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+}
+.id-left {
+  padding: 6rem 3rem;
+  border-right: 1px solid var(--border);
+}
+.id-label {
+  font-family: 'DM Mono', monospace;
+  font-size: .55rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--lime);
+  margin-bottom: 2rem;
+  display: flex; align-items: center; gap: .8rem;
+}
+.id-label::after { content:''; flex:1; height:1px; background:var(--border); }
+.id-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 3vw, 2.5rem);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--white);
+}
+.id-quote span { color: var(--lime); font-style: normal; }
+.id-sub {
+  margin-top: 1.5rem;
+  font-size: .95rem;
+  color: rgba(250,249,247,.45);
+  line-height: 1.7;
+  font-weight: 300;
+}
+.id-right {
+  padding: 6rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.id-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.id-row:last-child { border-bottom: none; }
+.id-key {
+  font-family: 'DM Mono', monospace;
+  font-size: .55rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--mid);
+}
+.id-val {
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--white);
+  text-align: right;
+}
+.id-val.lime { color: var(--lime); }
+
+/* ── SECTION HEADER ── */
+.sec-head {
+  display: flex;
+  align-items: baseline;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+.sec-n {
+  font-family: 'DM Mono', monospace;
+  font-size: .55rem;
+  letter-spacing: .15em;
+  color: var(--lime);
+  opacity: .5;
+}
+.sec-t {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1;
+}
+.sec-t em { font-style: italic; color: var(--lime); }
+.sec-line { flex:1; height:1px; background: var(--border); }
+
+/* ── PROJECTS ── */
+.projects { padding: 6rem 3rem; }
+
+/* Etsy Feature Card */
+.etsy-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--card);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  position: relative;
+  transition: border-color .3s;
+}
+.etsy-card:hover { border-color: var(--lime); }
+.etsy-card-left { padding: 3.5rem; display: flex; flex-direction: column; justify-content: space-between; }
+.etsy-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  font-family: 'DM Mono', monospace;
+  font-size: .55rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  background: var(--lime);
+  color: var(--black);
+  padding: .3rem .9rem;
+  margin-bottom: 1.5rem;
+  width: fit-content;
+  font-weight: 500;
+}
+.etsy-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -.02em;
+  margin-bottom: 1.2rem;
+}
+.etsy-title em { color: var(--lime); font-style: italic; }
+.etsy-desc {
+  font-size: 1rem;
+  color: rgba(250,249,247,.5);
+  line-height: 1.65;
+  font-weight: 300;
+  margin-bottom: 2rem;
+  flex: 1;
+}
+.etsy-metrics {
+  display: flex;
+  gap: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+.em-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--lime);
+  line-height: 1;
+}
+.em-label {
+  font-family: 'DM Mono', monospace;
+  font-size: .5rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-top: .2rem;
+}
+.etsy-card-right {
+  background: #0a0a0a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  position: relative;
+  overflow: hidden;
+}
+.etsy-visual {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+.shop-icon {
+  font-size: 4rem;
+  line-height: 1;
+  margin-bottom: 1rem;
+  filter: grayscale(0.3);
+}
+.shop-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--lime);
+  margin-bottom: .3rem;
+}
+.shop-handle {
+  font-family: 'DM Mono', monospace;
+  font-size: .6rem;
+  letter-spacing: .15em;
+  color: var(--mid);
+}
+.etsy-bg-circle {
+  position: absolute;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  border: 1px solid rgba(200,240,74,.06);
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+}
+.etsy-bg-circle:nth-child(2) { width:200px;height:200px;border-color:rgba(200,240,74,.1); }
+.etsy-bg-circle:nth-child(3) { width:100px;height:100px;border-color:rgba(200,240,74,.15); }
+
+/* Tag list */
+.tag-row { display:flex; flex-wrap:wrap; gap:.5rem; }
+.tag {
+  font-family: 'DM Mono', monospace;
+  font-size: .52rem;
+  letter-spacing: .1em;
+  border: 1px solid var(--border);
+  color: var(--mid);
+  padding: .25rem .7rem;
+  transition: border-color .2s, color .2s;
+}
+.etsy-card:hover .tag { border-color: rgba(200,240,74,.2); }
+
+/* Regular project cards */
+.proj-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.proj-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .3s, transform .3s;
+  cursor: none;
+}
+.proj-card:hover { border-color: var(--lime); transform: translateY(-4px); }
+.proj-card:hover .proj-arrow { opacity: 1; transform: translate(3px,-3px); }
+.proj-card:hover .proj-accent { width: 100%; }
+
+.proj-num {
+  font-family: 'DM Mono', monospace;
+  font-size: .52rem; letter-spacing: .15em;
+  color: var(--mid); margin-bottom: 1.5rem;
+}
+.proj-cat {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: .5rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: .25rem .7rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+.cat-cyber { background: rgba(200,240,74,.15); color: var(--lime); border: 1px solid rgba(200,240,74,.3); }
+.cat-essay { background: rgba(255,107,61,.12); color: var(--accent2); border: 1px solid rgba(255,107,61,.3); }
+.cat-biz { background: rgba(250,249,247,.07); color: rgba(250,249,247,.6); border: 1px solid rgba(250,249,247,.1); }
+
+.proj-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -.01em;
+  margin-bottom: .9rem;
+}
+.proj-desc {
+  font-size: .9rem;
+  color: rgba(250,249,247,.45);
+  line-height: 1.6;
+  font-weight: 300;
+  margin-bottom: 1.2rem;
+}
+.proj-arrow {
+  position: absolute; top: 2rem; right: 2rem;
+  color: var(--lime); font-size: 1rem;
+  opacity: .15; transition: opacity .3s, transform .3s;
+}
+.proj-accent {
+  position: absolute; bottom: 0; left: 0;
+  height: 2px; width: 0;
+  background: var(--lime);
+  transition: width .5s ease;
+}
+
+/* ── ESSAYS ── */
+.essays { padding: 6rem 3rem; background: #0a0a0a; }
+.essay-list { display: flex; flex-direction: column; gap: 0; }
+.essay-item {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: 2rem;
+  align-items: start;
+  padding: 2.5rem 0;
+  border-bottom: 1px solid var(--border);
+  cursor: none;
+  transition: padding-left .3s;
+}
+.essay-item:hover { padding-left: .8rem; }
+.essay-item:hover .essay-arrow { opacity: 1; color: var(--lime); }
+.essay-n {
+  font-family: 'DM Mono', monospace;
+  font-size: .55rem;
+  letter-spacing: .15em;
+  color: var(--lime);
+  opacity: .5;
+  padding-top: .3rem;
+}
+.essay-body {}
+.essay-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  margin-bottom: .5rem;
+  line-height: 1.2;
+}
+.essay-title em { font-style: italic; color: var(--accent2); }
+.essay-excerpt {
+  font-size: .95rem;
+  color: rgba(250,249,247,.4);
+  line-height: 1.65;
+  font-weight: 300;
+  max-width: 600px;
+}
+.essay-meta {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  align-items: flex-end;
+}
+.essay-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: .5rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: .25rem .7rem;
+}
+.essay-arrow {
+  font-size: 1rem; opacity: .15;
+  transition: opacity .3s, color .3s;
+  margin-top: .3rem;
+}
+
+/* ── SKILLS ── */
+.skills { padding: 6rem 3rem; }
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+.skill-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 2rem;
+  transition: border-color .3s;
+}
+.skill-card:hover { border-color: rgba(200,240,74,.25); }
+.skill-icon { font-size: 1.8rem; margin-bottom: 1rem; line-height: 1; }
+.skill-name {
+  font-family: 'DM Mono', monospace;
+  font-size: .6rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--lime);
+  margin-bottom: 1rem;
+  opacity: .7;
+}
+.skill-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+.skill-list li {
+  font-size: .9rem;
+  color: rgba(250,249,247,.5);
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+}
+.skill-list li::before {
+  content: '—';
+  color: var(--lime);
+  opacity: .4;
+  font-family: 'DM Mono', monospace;
+  font-size: .7rem;
+}
+
+/* ── CONTACT ── */
+.contact {
+  padding: 8rem 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: center;
+  border-top: 1px solid var(--border);
+}
+.contact-left {}
+.contact-big {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 6vw, 6rem);
+  font-weight: 900;
+  line-height: .92;
+  letter-spacing: -.03em;
+}
+.contact-big .outline {
+  -webkit-text-stroke: 1px rgba(250,249,247,.3);
+  color: transparent;
+}
+.contact-big .lime { color: var(--lime); }
+.contact-sub {
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  color: rgba(250,249,247,.4);
+  line-height: 1.65;
+  font-weight: 300;
+  max-width: 400px;
+}
+.contact-right {}
+.contact-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.4rem 0;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  color: var(--white);
+  transition: padding-left .3s;
+  cursor: none;
+}
+.contact-link:hover { padding-left: .6rem; }
+.contact-link:hover .cl-arr { opacity: 1; color: var(--lime); }
+.cl-left {}
+.cl-key {
+  font-family: 'DM Mono', monospace;
+  font-size: .5rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: .2rem;
+}
+.cl-val { font-size: 1.05rem; font-weight: 300; }
+.cl-arr { opacity: .15; transition: opacity .3s, color .3s; font-size: 1rem; }
+
+footer {
+  padding: 1.8rem 3rem;
+  display: flex; justify-content: space-between; align-items: center;
+  border-top: 1px solid var(--border);
+}
+footer span {
+  font-family: 'DM Mono', monospace;
+  font-size: .5rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(250,249,247,.2);
+}
+
+/* ── ANIMATIONS ── */
+@keyframes up {
+  from { opacity:0; transform:translateY(24px); }
+  to   { opacity:1; transform:translateY(0);     }
+}
+.reveal { opacity:0; transform:translateY(28px); transition: opacity .8s ease, transform .8s ease; }
+.reveal.in { opacity:1; transform:translateY(0); }
+
+@media (max-width: 900px) {
+  .identity, .etsy-card, .contact { grid-template-columns: 1fr; }
+  .etsy-card-right { height: 200px; }
+  .proj-grid { grid-template-columns: 1fr; }
+  .skills-grid { grid-template-columns: 1fr 1fr; }
+  nav { padding: 1rem 1.5rem; }
+  .hero, .projects, .essays, .skills, .contact { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .id-left, .id-right { padding: 3rem 1.5rem; }
+  .essay-item { grid-template-columns: 50px 1fr; }
+  .essay-meta { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-ring"></div>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-id">Adina Shady · Portfolio 2025</span>
+  <div class="nav-links">
+    <a href="#projects">Projects</a>
+    <a href="#essays">Essays</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <p class="hero-eyebrow">Senior · Bright International School · Cybersecurity Applicant</p>
+    <h1 class="hero-h1">
+      <span class="outline">Adina</span><br>
+      <span>Shady</span><span class="lime">.</span>
+    </h1>
+    <div class="hero-row2">
+      <p class="hero-desc">
+        Entrepreneur, essayist, and emerging security researcher.
+        I build <strong>businesses from scratch</strong>, think critically about
+        <strong>digital trust</strong>, and believe the next generation of
+        cybersecurity needs people who can also write and sell.
+      </p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn-lime">See My Work</a>
+        <a href="#essays" class="btn-outline">Read Essays</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-strip">
+    <div class="hero-strip-stat"><div class="stat-n">5</div><div class="stat-l">Projects</div></div>
+    <div class="strip-divider"></div>
+    <div class="hero-strip-stat"><div class="stat-n">3</div><div class="stat-l">Essays</div></div>
+    <div class="strip-divider"></div>
+    <div class="hero-strip-stat"><div class="stat-n">$2K+</div><div class="stat-l">Revenue</div></div>
+    <div class="strip-divider"></div>
+    <div class="hero-strip-stat"><div class="stat-n">4.9</div><div class="stat-l">Etsy Rating</div></div>
+    <div class="strip-divider"></div>
+    <div class="hero-strip-stat"><div class="stat-n">2</div><div class="stat-l">Languages</div></div>
+  </div>
+  <div class="hero-bg-text" aria-hidden="true">AS</div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    Cybersecurity <span class="m-dot">◆</span> Entrepreneurship <span class="m-dot">◆</span> E-commerce <span class="m-dot">◆</span> Digital Privacy <span class="m-dot">◆</span> Essay Writing <span class="m-dot">◆</span> CTF Challenges <span class="m-dot">◆</span> Bright International School <span class="m-dot">◆</span> Applying Fall 2026 <span class="m-dot">◆</span>
+    Cybersecurity <span class="m-dot">◆</span> Entrepreneurship <span class="m-dot">◆</span> E-commerce <span class="m-dot">◆</span> Digital Privacy <span class="m-dot">◆</span> Essay Writing <span class="m-dot">◆</span> CTF Challenges <span class="m-dot">◆</span> Bright International School <span class="m-dot">◆</span> Applying Fall 2026 <span class="m-dot">◆</span>
+  </div>
+</div>
+
+<!-- IDENTITY -->
+<section class="identity" id="about">
+  <div class="id-left">
+    <div class="id-label">Who I Am</div>
+    <p class="id-quote">
+      "I started selling handmade goods online at 15 — and discovered that
+      <span>every transaction is a data problem</span> waiting to be understood."
+    </p>
+    <p class="id-sub">
+      Running my own Etsy storefront taught me more about digital systems, fraud patterns, and trust infrastructure than any textbook. That curiosity led me to cybersecurity — where business instincts meet technical rigor. I'm applying for CS/Cybersecurity programs where I can turn that cross-disciplinary background into something powerful.
+    </p>
+  </div>
+  <div class="id-right">
+    <div class="id-row"><span class="id-key">School</span><span class="id-val">Bright International School</span></div>
+    <div class="id-row"><span class="id-key">Location</span><span class="id-val">Bishkek, Kyrgyzstan</span></div>
+    <div class="id-row"><span class="id-key">Applying For</span><span class="id-val lime">Cybersecurity / CS</span></div>
+    <div class="id-row"><span class="id-key">GPA</span><span class="id-val lime">— / —</span></div>
+    <div class="id-row"><span class="id-key">Languages</span><span class="id-val">English · Russian</span></div>
+    <div class="id-row"><span class="id-key">Interests</span><span class="id-val">Security · Business · Writing</span></div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects" id="projects">
+  <div class="sec-head">
+    <span class="sec-n">01 /</span>
+    <h2 class="sec-t">Projects &amp; <em>Ventures</em></h2>
+    <div class="sec-line"></div>
+  </div>
+
+  <!-- Etsy feature -->
+  <div class="etsy-card reveal">
+    <div class="etsy-card-left">
+      <div>
+        <div class="etsy-badge">★ Flagship Venture</div>
+        <h3 class="etsy-title">ShadyMade — <em>Handcrafted</em> Etsy Storefront</h3>
+        <p class="etsy-desc">
+          Built and scaled a solo e-commerce business on Etsy selling handmade jewellery and art prints. Handled everything: product photography, SEO-optimised listings, customer relations, shipping logistics, and pricing strategy. Achieved 4.9★ seller rating. Studying Etsy's payment fraud detection sparked my first real interest in cybersecurity infrastructure.
+        </p>
+        <div class="tag-row">
+          <span class="tag">E-commerce</span>
+          <span class="tag">Product Photography</span>
+          <span class="tag">SEO</span>
+          <span class="tag">Customer Relations</span>
+          <span class="tag">Pricing Strategy</span>
+          <span class="tag">Logistics</span>
+        </div>
+      </div>
+      <div class="etsy-metrics">
+        <div><div class="em-num">$2K+</div><div class="em-label">Revenue</div></div>
+        <div><div class="em-num">4.9★</div><div class="em-label">Rating</div></div>
+        <div><div class="em-num">80+</div><div class="em-label">Orders</div></div>
+        <div><div class="em-num">2 yrs</div><div class="em-label">Running</div></div>
+      </div>
+    </div>
+    <div class="etsy-card-right">
+      <div class="etsy-bg-circle"></div>
+      <div class="etsy-bg-circle"></div>
+      <div class="etsy-bg-circle"></div>
+      <div class="etsy-visual">
+        <div class="shop-icon">🛍️</div>
+        <div class="shop-name">ShadyMade</div>
+        <div class="shop-handle">etsy.com/shop/ShadyMade</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3-col grid -->
+  <div class="proj-grid">
+    <div class="proj-card reveal">
+      <div class="proj-num">002</div>
+      <div class="proj-cat cat-cyber">Cybersecurity</div>
+      <h3 class="proj-title">CTF Challenge Journal</h3>
+      <p class="proj-desc">Documented solutions and learning from 10+ Capture the Flag competitions on PicoCTF and Hack The Box. Focused on web exploitation, cryptography, and OSINT challenges.</p>
+      <div class="tag-row">
+        <span class="tag">Linux</span>
+        <span class="tag">Python</span>
+        <span class="tag">Cryptography</span>
+        <span class="tag">OSINT</span>
+      </div>
+      <span class="proj-arrow">↗</span>
+      <div class="proj-accent"></div>
+    </div>
+
+    <div class="proj-card reveal" style="transition-delay:.1s">
+      <div class="proj-num">003</div>
+      <div class="proj-cat cat-biz">Research</div>
+      <h3 class="proj-title">E-commerce Fraud Patterns Study</h3>
+      <p class="proj-desc">Analyzed 6 months of transaction data from my own Etsy shop alongside published datasets to identify phishing and chargeback fraud patterns. Presented at school science fair — 2nd place.</p>
+      <div class="tag-row">
+        <span class="tag">Data Analysis</span>
+        <span class="tag">Excel</span>
+        <span class="tag">Fraud Detection</span>
+      </div>
+      <span class="proj-arrow">↗</span>
+      <div class="proj-accent"></div>
+    </div>
+
+    <div class="proj-card reveal" style="transition-delay:.2s">
+      <div class="proj-num">004</div>
+      <div class="proj-cat cat-cyber">Cybersecurity</div>
+      <h3 class="proj-title">Password Security Audit Tool</h3>
+      <p class="proj-desc">Built a Python script to audit password strength using entropy analysis and common breach database checks via the HaveIBeenPwned API. Used by classmates and one teacher to audit their own accounts.</p>
+      <div class="tag-row">
+        <span class="tag">Python</span>
+        <span class="tag">API Integration</span>
+        <span class="tag">Security</span>
+      </div>
+      <span class="proj-arrow">↗</span>
+      <div class="proj-accent"></div>
+    </div>
+
+    <div class="proj-card reveal" style="transition-delay:.3s">
+      <div class="proj-num">005</div>
+      <div class="proj-cat cat-essay">Essay / Advocacy</div>
+      <h3 class="proj-title">Digital Privacy Zine</h3>
+      <p class="proj-desc">Created and distributed a bilingual (English/Russian) zine on digital privacy for teens — covering social media data harvesting, strong passwords, and recognising phishing. Printed 120 copies distributed at school.</p>
+      <div class="tag-row">
+        <span class="tag">Design</span>
+        <span class="tag">Advocacy</span>
+        <span class="tag">Bilingual</span>
+      </div>
+      <span class="proj-arrow">↗</span>
+      <div class="proj-accent"></div>
+    </div>
+
+    <div class="proj-card reveal" style="transition-delay:.4s">
+      <div class="proj-num">006</div>
+      <div class="proj-cat cat-biz">Business</div>
+      <h3 class="proj-title">School Marketplace App Proposal</h3>
+      <p class="proj-desc">Designed a secure peer-to-peer student marketplace app for Bright International School — including a full security threat model, wireframes, and a business pitch presented to the school board.</p>
+      <div class="tag-row">
+        <span class="tag">UX Design</span>
+        <span class="tag">Figma</span>
+        <span class="tag">Threat Modelling</span>
+      </div>
+      <span class="proj-arrow">↗</span>
+      <div class="proj-accent"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ESSAYS -->
+<section class="essays" id="essays">
+  <div class="sec-head">
+    <span class="sec-n">02 /</span>
+    <h2 class="sec-t">Selected <em>Writing</em></h2>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="essay-list">
+
+    <div class="essay-item reveal">
+      <span class="essay-n">Essay 01</span>
+      <div class="essay-body">
+        <h3 class="essay-title">Why I Learned to Sell Before I Learned to <em>Code</em></h3>
+        <p class="essay-excerpt">
+          A personal essay on building my Etsy business at 15 — and how shipping my first package led me to wonder who was protecting the buyer's credit card number on the other end. On entrepreneurship, trust, and the invisible infrastructure beneath every transaction.
+        </p>
+      </div>
+      <div class="essay-meta">
+        <span class="essay-tag cat-biz">Personal Essay</span>
+        <span class="essay-arrow">↗</span>
+      </div>
+    </div>
+
+    <div class="essay-item reveal" style="transition-delay:.1s">
+      <span class="essay-n">Essay 02</span>
+      <div class="essay-body">
+        <h3 class="essay-title">The Surveillance Economy and <em>Teenage Girls</em></h3>
+        <p class="essay-excerpt">
+          An analytical essay examining how social media platforms monetize the attention and personal data of young women — drawing on academic research, personal experience, and the case of TikTok's recommendation algorithm. Written for an IB Extended Essay pilot program.
+        </p>
+      </div>
+      <div class="essay-meta">
+        <span class="essay-tag cat-cyber">Academic</span>
+        <span class="essay-arrow">↗</span>
+      </div>
+    </div>
+
+    <div class="essay-item reveal" style="transition-delay:.2s">
+      <span class="essay-n">Essay 03</span>
+      <div class="essay-body">
+        <h3 class="essay-title">Bishkek After Dark: <em>Connectivity</em> and the Digital Divide</h3>
+        <p class="essay-excerpt">
+          A reported essay on internet access inequality in Kyrgyzstan, the risks faced by first-time internet users with no security literacy, and the case for multilingual digital safety education. Won second place at the Central Asian Youth Writing Competition.
+        </p>
+      </div>
+      <div class="essay-meta">
+        <span class="essay-tag cat-essay">Op-Ed</span>
+        <span class="essay-arrow">↗</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills" id="skills">
+  <div class="sec-head">
+    <span class="sec-n">03 /</span>
+    <h2 class="sec-t">Skills &amp; <em>Tools</em></h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <div class="skill-icon">🔐</div>
+      <div class="skill-name">Cybersecurity</div>
+      <ul class="skill-list">
+        <li>Linux basics & CLI</li>
+        <li>CTF (web, crypto, OSINT)</li>
+        <li>Network fundamentals</li>
+        <li>Threat modelling</li>
+      </ul>
+    </div>
+    <div class="skill-card reveal" style="transition-delay:.1s">
+      <div class="skill-icon">💻</div>
+      <div class="skill-name">Technical</div>
+      <ul class="skill-list">
+        <li>Python (scripting)</li>
+        <li>HTML / CSS</li>
+        <li>SQL basics</li>
+        <li>Figma (UI design)</li>
+      </ul>
+    </div>
+    <div class="skill-card reveal" style="transition-delay:.2s">
+      <div class="skill-icon">📦</div>
+      <div class="skill-name">Business</div>
+      <ul class="skill-list">
+        <li>E-commerce (Etsy)</li>
+        <li>Product photography</li>
+        <li>Pricing & analytics</li>
+        <li>Customer communication</li>
+      </ul>
+    </div>
+    <div class="skill-card reveal" style="transition-delay:.3s">
+      <div class="skill-icon">✍️</div>
+      <div class="skill-name">Communication</div>
+      <ul class="skill-list">
+        <li>Essay writing</li>
+        <li>Research & citation</li>
+        <li>Bilingual (EN / RU)</li>
+        <li>Graphic zine design</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-left reveal">
+    <h2 class="contact-big">
+      <span class="outline">Let's</span><br>
+      talk<span class="lime">.</span>
+    </h2>
+    <p class="contact-sub">
+      I'm applying to universities for Fall 2026 and always open to conversations about cybersecurity, entrepreneurship, or writing. Reach out — I respond quickly.
+    </p>
+  </div>
+  <div class="contact-right reveal" style="transition-delay:.2s">
+    <a href="mailto:adina.shady@email.com" class="contact-link">
+      <div class="cl-left"><div class="cl-key">Email</div><div class="cl-val">adina.shady@email.com</div></div>
+      <span class="cl-arr">→</span>
+    </a>
+    <a href="#" class="contact-link">
+      <div class="cl-left"><div class="cl-key">LinkedIn</div><div class="cl-val">linkedin.com/in/adina-shady</div></div>
+      <span class="cl-arr">→</span>
+    </a>
+    <a href="#" class="contact-link">
+      <div class="cl-left"><div class="cl-key">GitHub</div><div class="cl-val">github.com/adina-shady</div></div>
+      <span class="cl-arr">→</span>
+    </a>
+    <a href="#" class="contact-link">
+      <div class="cl-left"><div class="cl-key">Etsy Shop</div><div class="cl-val">etsy.com/shop/ShadyMade</div></div>
+      <span class="cl-arr">→</span>
+    </a>
+    <a href="#" class="contact-link">
+      <div class="cl-left"><div class="cl-key">Location</div><div class="cl-val">Bishkek, Kyrgyzstan</div></div>
+      <span class="cl-arr">→</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 Adina Shady</span>
+  <span>Bright International School · Bishkek</span>
+  <span>University Application Portfolio</span>
+</footer>
+
+<script>
+  // Cursor
+  const cur = document.getElementById('cur');
+  const ring = document.getElementById('cur-ring');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove', e => {
+    mx=e.clientX; my=e.clientY;
+    cur.style.left=mx+'px'; cur.style.top=my+'px';
+  });
+  (function animRing(){
+    rx+=(mx-rx)*.13; ry+=(my-ry)*.13;
+    ring.style.left=rx+'px'; ring.style.top=ry+'px';
+    requestAnimationFrame(animRing);
+  })();
+  document.querySelectorAll('a,button').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{ cur.style.width='16px';cur.style.height='16px';ring.style.width='50px';ring.style.height='50px'; });
+    el.addEventListener('mouseleave',()=>{ cur.style.width='8px';cur.style.height='8px';ring.style.width='32px';ring.style.height='32px'; });
+  });
+
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
+  }, {threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
